@@ -1,0 +1,61 @@
+%h1 Report
+.row
+  %label Reported by
+  = @report.username
+.row
+  = image_tag @report.photo.url
+.row
+  %label Description
+  = @report.description
+.row
+  %label Date Reported
+  = formatted_date(@report.created_at)
+.row
+  %label Last Update
+  None yet
+.row
+  = link_to 'Tag Party'
+  = link_to 'Comment'
+  = link_to 'Change Status'
+
+.tag_party
+  %h3 Tag Party
+  = form_for @report, url: tag_party_report_path(@report), method: :put do |f|
+    - @parties.each do |p|
+      .row
+        %label
+          = check_box_tag 'contributors[]', p.id, contributor?(@contributors, p)
+          = p.username
+    .row
+      = f.submit 'Save'
+      = f.button 'Cancel'
+
+.comments
+  %h3 Comments
+  = form_for @report, url: comment_report_path(@report), method: :put do |f|
+    = text_area_tag :comment
+    - if @comments.any?
+      %h4 Comments
+      %ul
+      - @comments.each do |c|
+        .li
+          %label.commenter= c.username
+          %p.comment= c.comment
+
+    .row
+      = f.submit 'Save'
+      = f.button 'Cancel'
+
+.update_status
+  %h3 Change Status
+  = form_for @report, url: update_status_report_path(@report), method: :put do |f|
+    .row
+      = select_tag :status, options_for_select(Status::STATES)
+    .row
+      %label
+        Message
+        = text_area_tag :message
+    .row
+      = f.submit 'Save'
+      = f.button 'Cancel'
+

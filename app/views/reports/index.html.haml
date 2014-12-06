@@ -1,0 +1,17 @@
+%h1 List of Issues
+%table
+  %tr
+    %th Reported By
+    %th Date Reported
+    %th Short Description
+    %th
+  - if @reports.any?
+    - @reports.each do |report|
+      %tr
+        %td= report.username
+        %td= formatted_date(report.created_at)
+        %td= truncate(report.description, length: 20)
+        %td= link_to 'view', report_path(report)
+  - else
+    %tr
+      %td{colspan: '4'} No Issues Yet.
