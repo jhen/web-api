@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
 
   has_many :reports
+  has_many :points
   validates :username, :presence => true, :uniqueness => true
 
   ROLES = ['citizen', 'local government', 'national government', 'private sector']

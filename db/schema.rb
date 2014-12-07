@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205082952) do
+ActiveRecord::Schema.define(version: 20141206084029) do
 
   create_table "attachments", force: true do |t|
     t.string   "attachable_type"
@@ -48,10 +48,29 @@ ActiveRecord::Schema.define(version: 20141205082952) do
     t.datetime "updated_at"
   end
 
+  create_table "points", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "restaurant_id"
+    t.string   "point_type"
+    t.integer  "point"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reports", force: true do |t|
     t.integer  "user_id"
     t.text     "description"
     t.string   "photo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "restaurants", force: true do |t|
+    t.string   "name"
+    t.text     "address"
+    t.string   "longitude"
+    t.string   "latitude"
+    t.boolean  "premium"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +86,13 @@ ActiveRecord::Schema.define(version: 20141205082952) do
   create_table "subscribers", force: true do |t|
     t.integer  "user_id"
     t.integer  "report_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taglines", force: true do |t|
+    t.integer  "restaurant_id"
+    t.text     "tagline"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
