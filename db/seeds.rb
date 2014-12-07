@@ -19,6 +19,8 @@ restaurants = [
   ['KFC', 'Dela Rosa Car Park 2, Dela Rosa Street, Legaspi Village, Makati City'],
   ['Pizza Hut', 'First Floor, Tower 1, Makati Medical Center, Legaspi Village, Makati City'],
   ["Domino's Pizza", 'Marvin Plaza, Chino Roces Avenue, Legaspi Village, Makati City'],
+  ['Jollibee', 'Ground Floor, Makati Cinema Square, Legaspi Village, Makati City'],
+  ['Hungry Jack', 'Ground Floor, Makati Cinema Square, Legaspi Village, Makati City']
 ]
 
 restaurants.each do |r|
@@ -49,12 +51,23 @@ taglines = [
   ["McDonalds", "I know you love it"],
   ["Taco Bell", "Sometimes, you have to think outside the bun"],
   ["Hungry Jack", "Hungryyyyy??? Hungry Jack. They gobble ‘em up and the plate come back for Hungry Jack"],
-  ["", ""],
-  ["", ""],
-  ["", ""],
-  ["", ""],
-  ["", ""],
+  ["Jollibee", "You should eat here because you are broke meh :-("],
 ]
+
+taglines.each_with_index do |t|
+  addrs = 'Ground Floor, Makati Cinema Square, Legaspi Village, Makati City'
+  r = Restaurant.where(name: t[0]).first
+  r = Restaurant.create!(name: t[0], address: addrs) if r.blank?
+  Tagline.create!(restaurant_id: r.id, tagline: t[1])
+end
+
+rs = Restaurant.where(longitude: nil, latitude: nil)
+lat = '14.554729'
+long = '121.0244452'
+rs.each do |r|
+  r.update_attributes(longitude: long, latitude: lat)
+end
+
 
 APP_KEY     = 'uctqfmaqilqx6w2lfxpnmujmxardywln'
 APP_SECRET  = '9vmzk9kvaziqoka0cto5terklmoa5fyg'
